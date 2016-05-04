@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rev="made" href="mailto:hajimehoshi&#x40;gmail.com" />
+<link rel="stylesheet" href="./style.css" type="text/css" />
+<title>マニュアル (先生向け)</title>
+</head>
+
+<body>
+
+<h1>マニュアル (先生向け)</h1>
+
+<h2>Sprite を用いたオブジェクト指向</h2>
+
+<h3>Sprite クラス</h3>
+
+<p>lib/komaba/mini_star/sprite.rb に定義されています。</p>
+<p>描画の基本となるクラスです。新しく描画したいものを作る場合、
+このクラスを継承した新しいクラスを作り、しかるべき実装をします。</p>
+<p>描画の処理内容を作るには、 display メソッドをオーバーライドします。</p>
+<p>描画を行うにはグローバルな redisplay_all_objects メソッドを呼びます。
+現在存在する全 Sprite オブジェクトの display メソッドが呼ばれ、
+画面に描画されます。
+描画の手段はこれだけしかありません。
+「特定のオブジェクトだけ再描画」はできません。
+古い画面をどう残すかの処理が煩雑になるのを避けるためです。</p>
+
+<h3>Person クラス</h3>
+
+<p>lib/komaba/mini_star/person.rb に定義されています。
+Sprite クラスを継承します。</p>
+<p>人を描画します。 x, y 座標は足下を表します。</p>
+<p>display メソッドで座標を計算しながら人を描画します。
+すべて基本的な描画命令のみで構成されています。</p>
+<p><em>内部ではインスタンス変数 (@foo) を極力参照していません。
+代わりにメソッド (self.foo) を使っています。</em>
+Person クラスを継承したクラスで、メソッドをオーバーライドすることで
+自由に挙動を変えられるようにするためです。</p>
+
+<h3>Woman クラス</h3>
+
+<p>examples/splite_test.rb に定義されています。
+Person クラスを継承します。</p>
+
+<h3>Child クラス</h3>
+
+<p>examples/splite_test.rb に定義されています。
+Person クラスを継承します。</p>
+<p>身長制限を設けるために、 height= メソッドをオーバーライドしています。</p>
+
+<h3>Woman クラス</h3>
+
+<p>examples/splite_test.rb に定義されています。
+Person クラスを継承します。</p>
+<p>Person の display メソッドを super で呼び出し、
+さらに台形を描画してスカートを追加しています。</p>
+
+<h3>Alien クラス</h3>
+
+<p>examples/alien.rb に定義されています。
+Person クラスを継承します。</p>
+<p>Person クラスと同じ挙動をしますが、内部で保持する座標は
+極座標形式になっています。</p>
+
+<h3>オブジェクト指向との関連</h3>
+<dl>
+<dt>継承</dt>
+<dd>
+<p>Sprite クラスを継承し、実装を追加したクラスを作ることで描画を制御します。</p>
+</dd>
+<dt>ポリモルフィズム</dt>
+<dd>
+<p>継承するときの既存のメソッドのオーバーライドに対応します。
+たとえば Person クラスを継承した Woman というクラスで、
+ display メソッドをオーバーライドすることで描画に追加ができます。</p>
+</dd>
+<dt>カプセル化</dt>
+<dd>
+<p>見かけ (外から呼び出せるメソッド) や挙動は同じだが、
+内部構造が違うクラスを用意します。
+たとえば Person クラスと Alien クラスです。</p>
+</dd>
+</dl>
+
+
+<h2>動作テスト (増原先生向け)</h2>
+
+<p>(Star Ruby などのインストールは install.html をご参照願います。)</p>
+<p>現在のところ、 ECC 環境以外の環境でテストする場合、 komaba/array と komaba/mini_star を require する必要があります。</p>
+<p>Windows, Linux の場合は以下のように起動してください。</p>
+<pre class="code"><code>irb -rkomaba/array -rkomaba/mini_star</code></pre>
+<p>Mac OS X の場合は以下のように起動してください。</p>
+<pre class="code"><code>isrb -rkomaba/array -rkomaba/mini_star</code></pre>
+
+<p><em>テスト方法として、スクリプトを実行して目視で確認する以外ありません。</em>
+ライブラリがビジュアライズを活用したものであるからです。
+また、以下のテストはまだ全機能を網羅しておりません。
+追加次第改訂版をお送りします。</p>
+
+<h3>examples</h3>
+
+<dl>
+<dt>array.rb</dt>
+<dd>
+<p>二次元配列を可視化します。白黒の 4x2 の長方形が表示されます。</p>
+</dd>
+<dt>call_stack.rb</dt>
+<dd>
+<p>フィボナッチ数列のコールスタックが表示されます</p>
+</dd>
+<dt>color_array.rb</dt>
+<dd>
+<p>三次元配列を可視化します。色の配列が表示されます。</p>
+</dd>
+<dt>combination.rb</dt>
+<dd>
+<p>順列組み合わせを可視化します。パスカルの三角形が表示されます。</p>
+</dd>
+<dt>game_of_life.rb</dt>
+<dd>
+<p>ライフゲームが表示されます。</p>
+</dd>
+<dt>irregular_array1.rb</dt>
+<dt>irregular_array2.rb</dt>
+<dd>
+<p>show 関数に不正な配列を渡した時のエラー表示のテストです。</p>
+<dt>large_array.rb</dt>
+<dd>
+<p>巨大な二次元配列を可視化します。巨大な白黒の長方形が表示されます。</p>
+</dd>
+<dt>show_object.rb</dt>
+<dd>
+<p>show_object のテストです。 10x10 の二次元配列の内部状態が表示されます。</p>
+</dd>
+<dt>show_object2.rb</dt>
+<dd>
+<p>show_object のテストです。複雑な配列の内部状態が表示されます。</p>
+</dd>
+<dt>sierpinski.rb</dt>
+<dd>
+<p>sierpinski の三角形が表示されます。</p>
+</dd>
+<dt>sprite_test.rb</dt>
+<dd>
+<p>Sprite クラスのテストです (テスト方法は後述)。</p>
+</dd>
+<dt>tak.rb</dt>
+<dd>
+<p>竹内関数のコールスタックが表示されます。</p>
+</dd>
+</dl>
+
+<h3>Sprite クラス、 Person クラスのテスト</h3>
+
+<p>ソート関数のテストと同時に Person クラスのテストになります。</p>
+<p><a href="http://lecture.ecc.u-tokyo.ac.jp/johzu/joho-kagaku/2008/code/">配布プログラム</a>のソート関数関係のものが動作すれば OK です。</p>
+<ul>
+<li>animated_simplesort.rb</li>
+<li>more_animated_simplesort.rb</li
+<li>animated_mergesort.rb</li>
+<li>more_animated_mergesort.rb</li>
+<li>animated_quicksort.rb</li>
+<li>more_animated_quicksort.rb</li>
+<li>more_animated_quicksort2.rb</li>
+<li>more_animated_quicksort3.rb</li>
+</ul>
+
+<h3>Sprite クラスの子クラスのテスト</h3>
+
+<p>irb (isrb) 上で以下を実行してください。</p>
+<pre class="code"><code>irb&gt; load("sprite_test.rb")
+irb&gt; w = Woman.new # 人 (スカートつき) が表示される
+irb&gt; w.x = 100 # X 座標が変更される
+irb&gt; w.y = 200 # Y 座標が変更される
+irb&gt; w.height = 50 # 身長が変更される
+irb&gt; w.hide() # 人が消える
+irb&gt; c = Child.new # 子供が表示される
+irb&gt; c.height = 200
+irb&gt; c.height = 100 # (身長制限のために) 高さが変わらないことを確認する
+irb&gt; c.hide() # 人が消える
+irb&gt; a = Alien.new # エイリアンが表示される
+irb&gt; a.move(200, 200) # エイリアンが移動する
+irb&gt; show_classes() # クラス図が表示される
+irb&gt; a.move(200, 300) # 現在実行されるメソッドが赤く光る
+irb&gt; hide_classes() # クラス図が消える</code></pre>
+
+<h3>その他</h3>
+
+<p>Person クラス (lib/komaba/mini_star/person.rb) は学生にも見せるものなので、
+その点からの突っ込みがあらば助かります。</p>
+
+<h2>文責</h2>
+
+<address>情報理工学系研究科創造情報学専攻修士 2 年<br />
+48-076606 星一<br />
+&lt;hajimehoshi at gmail.com&gt;</address>
+
+</body>
+
+</html>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rev="made" href="mailto:hajimehoshi&#x40;gmail.com" />
+<link rel="stylesheet" href="./style.css" type="text/css" />
+<title>API リファレンス</title>
+</head>
+
+<body>
+
+<h1>API リファレンス</h1>
+
+<ul>
+<li><a href="#array">komaba/array ライブラリ</a></li>
+<li><a href="#mini_star">komaba/mini_star ライブラリ</a></li>
+</ul>
+
+<h2 id="array">komaba/array ライブラリ</h2>
+
+<dl>
+<dt><code>checkpoint_a()</code></dt>
+<dd>
+<p>実行中にスペースキーを押すと、 chekcpoint_a 呼び出し箇所がある時点で一時停止します。</p>
+<p>一時停止状態でさらにスペースキーを押すと、実行が再開されますが、再び checkpoint_a 呼び出し箇所で一時停止します。</p>
+<p>一時停止状態でエンターキーを押すと、実行が通常通り再開します。</p>
+</dd>
+<dt><code>show(<var>array</var>)</code></dt>
+<dd>
+<p>配列 <code><var>array</var></code> を表示します。</p>
+<p>1 から 3 次元配列に対応しています。</p>
+<p>各要素は 0 から 1 の実数です。
+1、 2 次元配列の場合は、白黒の度合いを表します。
+3 次元配列の場合は 3 次元目がそれぞれ R、 G、 B を表します。</p>
+<p>要素数がそろっていないとエラーになります。</p>
+</dd>
+<dt><code>関数名_CS(<var>args</var>, ...)</code></dt>
+<dd>
+<p>関数名の関数を実行し、コールスタックを表示します。</p>
+<p><code><var>args</var></code> に、関数実行時に渡す引数を指定します。</p>
+<pre><code>def fib(x)
+  if x < 2
+    1
+  else
+    fib(x - 1) + fib(x - 2)
+  end
+end
+
+fib_CS(10)</code></pre>
+</dd>
+<dt><code>show_call_stack(<var>func_name</var>, <var>args</var> ...)</code> (deprecated)</dt>
+<dd>
+<p>(このメソッドは互換性のために残されています。)</p>
+<p>関数 <code><var>func_name</var></code> を実行し、コールスタックを表示します。 <code>関数名_CS</code> と効果は同じです。</p>
+<p><code><var>args</var></code> に、関数実行時に渡す引数を指定します。</p>
+<p><code><var>func_name</var></code> は文字列 (またはシンボル) でなければなりません。
+関数名をそのまま書いても正しく動きません。</p>
+<pre><code>def fib(x)
+  if x < 2
+    1
+  else
+    fib(x - 1) + fib(x - 2)
+  end
+end
+
+show_call_stack(fib, 10) # fib を引数なしで実行してしまうことになり、エラーになる。
+show_call_stack("fib", 10) # 正しくコールスタックが表示される。</code></pre>
+<p>実行時に表示される白い四角の中の文字列は、それぞれ引数、戻り値を表します。</p>
+</dd>
+<dt><code>show_object(<var>obj</var>)</code></dt>
+<dd>
+<p>任意のオブジェクト <code><var>obj</var></code> を可視化します。</p>
+<p>配列の場合は (2 次元配列までですが) 箱状に表示します。
+その他のオブジェクトは文字列として表示されます。</p>
+</dd>
+<dt><code>text(<var>text</var>, <var>x</var>, <var>y</var>)</code></dt>
+<dd>
+<p>文字列 <code><var>text</var></code> を座標 (<code><var>x</var></code>,<code><var>y</var></code>) に
+描画します。</p>
+<p>最後に表示されたウィンドウに描画されます。</p>
+</dd>
+</dl>
+
+<h2 id="mini_star">komaba/mini_star ライブラリ</h2>
+
+<p>(今のところ) 人を表示したり動かしたりすることができる、 komaba/array とは独立したライブラリです。</p>
+<p>Ruby プログラムの先頭行に以下を加えると使用できます。</p>
+<pre><code>require "komaba/<em>mini_star</em>"
+include(Komaba::MiniStar)</code></pre>
+
+<h3>関数</h3>
+
+<dl>
+<dt><code>checkpoint()</code></dt>
+<dd>
+<p>実行中にスペースキーを押すと、 chekcpoint 呼び出し箇所がある時点で一時停止します。</p>
+<p>一時停止状態でさらにスペースキーを押すと、実行が再開されますが、再び checkpoint 呼び出し箇所で一時停止します。</p>
+<p>一時停止状態でエンターキーを押すと、実行が通常通り再開します。</p>
+</dd>
+<dt><code>halt()</code></dt>
+<dd>
+<p>画面を更新しつづける無限ループを実行します。</p>
+<p>irb (isrb) ではなく ruby (rsdl) コマンドで実行する場合、
+スクリプトの最後に書いておかないと、プログラム終了時に画面が自動的に閉じられてしまいます。</p>
+</dd>
+<dt><code>is_pressed(<var>key</var>)</code></dt>
+<dd>
+<p>関数が呼ばれた時点でキーボードのキー <code><var>key</var></code> が押されていたら true、それ以外の場合は false を返します。</p>
+<p><code><var>key</var></code> は文字列を指定します。指定できるキーは以下の通り。</p>
+<pre>"up" (上キー)
+"left" (左キー)
+"right" (右キー)
+"down" (下キー)
+"enter" (エンターキー)
+"a" .. "z" (アルファベットキー)</pre>
+<p>Person クラスと組み合わせた使用例:</p>
+<pre class="code">person = Person.new()
+
+while true
+  if is_pressed("up")
+    person.y = person.y - 8
+  end
+  if is_pressed("down")
+    person.y = person.y + 8
+  end
+  if is_pressed("left")
+    person.x = person.x - 8
+  end
+  if is_pressed("right")
+    person.x = person.x + 8
+  end
+  if is_pressed("enter")
+    if person.is_raising_hand()
+      person.lower_hand()
+    else
+      person.raise_hand()
+    end
+  end
+  redisplay_all_objects()
+end</pre>
+</dd>
+<dt><code>show_classes()</code>
+<dt><code>hide_classes()</code></dt>
+<dd>
+<p>クラス図 (定義されているクラスのツリーおよびメソッド一覧) を
+表示、非表示にします。</p>
+<p>クラス図が表示されている間、呼ばれるメソッドはフラッシュします。</p>
+</dd>
+<dt><code>start()</code> (deprecated)</dt>
+<dd>
+<p>(このメソッドは互換性のために残されています。)</p>
+<p>画面を表示します。</p>
+</dd>
+</dl>
+
+<h3>Sprite クラス</h3>
+
+<dl>
+<dt><code>display()</code></dt>
+<dd>
+<p>「何をどう描画するか」の処理が書かれるメソッドです。
+Sprite クラスを継承したクラス側で再定義 (オーバーライド) する
+必要があります。</p>
+<p><em>このメソッドは内容が定義されていればいいのであって、
+プログラマーが明示的に呼ぶ必要はありません。</em></p>
+</dd>
+<dt><code>paint_out(<var>x</var>, <var>y</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>座標 (<code><var>x</var></code>, <code><var>y</var></code>) を起点に、
+色 <code><var>color</var></code> で塗りつぶします。</p>
+</dd>
+<dt><code>redisplay_all_objects()</code></dt>
+<dd>
+<p>現在存在するすべての Sprite オブジェクトを再描画します。</p>
+<p><code>display</code> メソッドの中でこのメソッドを呼ぶと、
+無限ループになる可能性があります。</p>
+</dd>
+<dt><code>render_circle(<var>x</var>, <var>y</var>, <var>radius</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>中心座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+半径 <code><var>radius</var></code>、
+色 <code><var>color</var></code> の円を描画します。</p>
+</dd>
+<dt><code>render_filled_circle(<var>x</var>, <var>y</var>, <var>radius</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>中心座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+半径 <code><var>radius</var></code>、
+色 <code><var>color</var></code> の塗りつぶされた円を描画します。</p>
+</dd>
+<dt><code>render_filled_rect(<var>x</var>, <var>y</var>,
+<var>width</var>, <var>height</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>左上座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+幅 <code><var>width</var></code>、
+高さ <code><var>height</var></code>、
+色 <code><var>color</var></code> の塗りつぶされた矩形を描画します。</p>
+</dd>
+<dt><code>render_filled_trapezoid(<var>x</var>, <var>y</var>,
+<var>upper_width</var>, <var>lower_width</var>, <var>height</var>,
+<var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>左上座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+上底の幅 <code><var>upper_width</var></code>、
+下底の幅 <code><var>lower_width</var></code>、
+高さ <code><var>height</var></code>、
+色 <code><var>color</var></code> の塗りつぶされた (等脚) 台形を描画します。</p>
+</dd>
+<dt><code>render_line(<var>x1</var>, <var>y1</var>,
+<var>x2</var>, <var>y2</var>,
+<var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>座標 (<code><var>x1</var></code>, <code><var>y1</var></code>) から
+座標 (<code><var>x2</var></code>, <code><var>y2</var></code>) までを結ぶ
+線分を描画します。</p>
+</dd>
+<dt><code>render_pixel(<var>x</var>, <var>y</var>,
+<var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>座標 (<code><var>x</var></code>, <code><var>y</var></code>) に
+色 <code><var>color</var></code> の点を描画します。</p>
+</dd>
+<dt><code>render_rect(<var>x</var>, <var>y</var>,
+<var>width</var>, <var>height</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>左上座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+幅 <code><var>width</var></code>、
+高さ <code><var>height</var></code>、
+色 <code><var>color</var></code> の矩形を描画します。</p>
+</dd>
+<dt><code>render_text(<var>text</var>,
+<var>x</var>, <var>y</var>,
+<var>size</var>, <var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>文字列 <code><var>text</var></code> を、
+座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+文字の大きさ <code><var>size</var></code>、
+色 <code><var>color</var></code> で描画します。</p>
+</dd>
+<dt><code>render_trapezoid(<var>x</var>, <var>y</var>,
+<var>upper_width</var>, <var>lower_width</var>, <var>height</var>,
+<var>color</var>)</code></dt>
+<dd>
+<p><em>display メソッドの中で使われるのを想定しています。</em></p>
+<p>左上座標 (<code><var>x</var></code>, <code><var>y</var></code>)、
+上底の幅 <code><var>upper_width</var></code>、
+下底の幅 <code><var>lower_width</var></code>、
+高さ <code><var>height</var></code>、
+色 <code><var>color</var></code> の (等脚) 台形を描画します。</p>
+</dd>
+<dt><code>set_xy(<var>x, y</var>)</code></dt>
+<dd>
+<p>X 座標と Y 座標を同時に設定します。</p>
+<pre class="code"><code>s.x = 100
+s.y = 200</code></pre>
+<p>と</p>
+<pre class="code"><code>s.set_xy(100, 200)</code></pre>
+<p>はほとんど同じですが、前者は二回再描画されるのに対して、
+後者は一回だけ再描画されます。</p>
+</dd>
+<dt><code>x()</code></dt>
+<dt><code>x=(<var>x</var>)</code></dt>
+<dd>
+<p>X 座標を取得、設定します。
+Sprite クラス自体はこのメソッドと変数 <code>@x</code> を使っておらず、
+子クラスで使われることを想定しています。
+Y 座標も同様です。</p>
+</dd>
+<dt><code>y()</code></dt>
+<dt><code>y=(<var>y</var>)</code></dt>
+<dd>
+<p>Y 座標を取得、設定します。</p>
+</dd>
+</dl>
+
+<h3>Person クラス</h3>
+
+<p><code>Sprite</code> クラスを継承します。</p>
+
+<dl>
+<dt><code>Person.new()</code></dt>
+<dd>
+<p>Person オブジェクトを新規作成します。作成した時点で画面に人が表示されます。</p>
+</dd>
+<dt><code>color()</code></dt>
+<dt><code>color=(<var>color</var>)</code></dt>
+<dd>
+<p>人の色を取得、設定します。</p>
+</dd>
+<dt><code>flash()</code></dt>
+<dt><code>flash(<var>time</var>)</code></dt>
+<dt><code>flash(<var>time</var>, <var>color</var>)</code></dt>
+<dd>
+<p>人を一定時間光らせます。</p>
+<p><code><var>time</var></code> には秒数を指定します。 <code><var>color</var></code> には色を RGB の配列で指定します。</p>
+<p><code><var>time</var></code> は省略時には 1, <code><var>color</var></code> は省略時には [1,0,0] となります。</p>
+</dd>
+<dt><code>height()</code></dt>
+<dt><code>height=(<var>height</var>)</code></dt>
+<dd>
+<p>背の高さを取得、設定します。</p>
+</dd>
+<dt><code>hide()</code></dt>
+<dd>
+<p>人を非表示にします</p>
+</dd>
+<dt><code>is_raising_hand()</code></dt>
+<dd>
+<p>手を上げていたら true を、そうでない場合は false を返します。</p>
+</dd>
+<dt><code>is_visible()</code></dt>
+<dd>
+<p>表示状態ならば true を、そうでない場合は false を返します。</p>
+</dd>
+<dt><code>lower_hand()</code></dt>
+<dd>
+<p>手を下げます。</p>
+</dd>
+<dt><code>move(<var>x</var>, <var>y</var>)</code></dt>
+<dt><code>move(<var>x</var>, <var>y</var>, <var>options</var>)</code></dt>
+<dd>
+<p>人を現在位置から (<code><var>x</var></code>, <code><var>y</var></code>) 座標に移動させます。</p>
+<p><code><var>options</var></code> で移動にかかる時間またはスピードを Hash オブジェクトで指定出来ます。</p>
+<pre><code>p = Person.new()
+p.move(0, 0) # 省略可能
+p.move(100, 100, :time => 5) # 5[s] かけて移動
+p.move(200, 200, :speed => 100) # 100[px/s] の速度で移動</code></pre>
+<p>両方同時に指定した場合は <code>:time</code> を優先します。</p>
+</dd>
+<dt><code>raise_hand()</code></dt>
+<dd>
+<p>手を上げます。</p>
+</dd>
+<dt><code>show()</code></dt>
+<dd>
+<p>人を表示します。</p>
+</dd>
+<dt><code>x()</code></dt>
+<dt><code>x=(<var>x</var>)</code></dt>
+<dd>
+<p>人の X 座標を取得、設定します。座標は人の足元の座標を表します。</p>
+</dd>
+<dt><code>y()</code></dt>
+<dt><code>y=(<var>y</var>)</code></dt>
+<dd>
+<p>人の Y 座標を取得、設定します。</p>
+</dd>
+</dl>
+
+<dl>
+</dl>
+
+<h2>文責</h2>
+
+<address>情報理工学系研究科創造情報学専攻修士 2 年<br />
+48-076606 星一<br />
+&lt;hajimehoshi at gmail.com&gt;</address>
+
+</body>
+
+</html>

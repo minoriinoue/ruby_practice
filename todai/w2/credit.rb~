@@ -1,0 +1,32 @@
+def issueCC(dt, dl, ic)
+  tmp = dt.to_f /ic.to_f
+  if tmp >= 0.28
+    false
+  elsif tmp >= 0.2 && tmp < 0.28
+    if dl >= 1
+      false
+    else
+      if ic >= 3000000
+        true
+      else
+        false
+      end
+    end
+  else
+    if dl >= 2
+      false
+    elsif dl == 1
+      if ic >= 5000000
+        true
+      else
+        false
+      end
+    else
+      if ic >= 3000000
+        true
+      else
+        false
+      end
+    end
+  end
+end

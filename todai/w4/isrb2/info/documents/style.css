@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 1em 2em;
+}
+dt {
+  font-weight: bold;
+}
+em {
+  color: #933;
+  font-style: normal;
+  font-weight: normal;
+}
+h2 {
+  border-color: #ccd;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+  padding-bottom: 0;
+}
+h3 {
+  border-color: #ccd;
+  border-style: solid;
+  border-width: 0 0 0 15px;
+  padding-left: 10px;
+}
+pre {
+  background-color: #eee;
+  border-color: #ccc;
+  border-style: solid;
+  border-width: 1px;
+  padding: 0.5em;
+}

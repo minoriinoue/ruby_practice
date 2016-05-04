@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<link rev="made" href="mailto:hajimehoshi&#x40;gmail.com" />
+<link rel="stylesheet" href="./style.css" type="text/css" />
+<title>インストール手順</title>
+</head>
+
+<body>
+
+<h1>可視化ライブラリ Komaba (仮) インストール手順</h1>
+
+<ul>
+<li><a href="#windows">インストール手順 (Windows)</a></li>
+<li><a href="#linux">インストール手順 (Linux)</a></li>
+<li><a href="#mac_os_x">インストール手順 (Mac OS X)</a></li>
+</ul>
+
+<h2 id="windows">インストール手順 (Windows)</h2>
+
+<h3><a href="http://www.ruby-lang.org/">Ruby</a> のインストール</h3>
+
+<p><a href="http://arton.no-ip.info/data/asr/">ActiveScriptRuby(1.8.7-p72 --with-winsock2)</a> をインストールします。
+Star Ruby Ver 0.3.1 はこれに付属しています。</p>
+<p>インストールが完了すると、 ruby_console というショートカットがデスクトップ上に現れるので、
+今後はこれから起動するコンソールで作業します。</p>
+
+<h3>可視化ライブラリのインストール</h3>
+
+<p>info.tar.gz を展開し (WinRAR などを使います)、そのフォルダの中で次のコマンドを実行します。</p>
+<pre>&gt; ruby install.rb</pre>
+
+<h3>その他の関連ライブラリのインストール</h3>
+
+<p>次のコマンドを実行します。</p>
+<pre>&gt; gem install win32-open3</pre>
+<p>途中選択肢が出た場合は、 win32 と書かれているもので、最新版のものを選んでください。</p>
+
+<h3>実行</h3>
+<p>examples の中の Ruby ファイルを実行します。</p>
+<pre>&gt; ruby -rubygems array.rb # (例)</pre>
+<p>また、 irb も同様に実行できます。実行例は以下の通りです。</p>
+<pre>&gt; irb -rubygems
+irb(main):001:0&gt; require "komaba/array" # おまじない
+irb(main):002:0&gt; show([0, 1])</pre>
+
+<p>-rubygems オプションは環境変数次第では不要ですが、
+何のことかよく分からない場合は念のためつけてください。</p>
+
+<h2 id="linux">インストール手順 (Linux)</h2>
+
+<h3><a href="http://www.ruby-lang.org/">Ruby</a> のインストール</h3>
+
+<p>Ruby 1.8 をインストールします (Ruby 1.9 では動きません)。</p>
+
+<h3>SDL などのインストール</h3>
+<p><a href="http://www.starruby.info/">Star Ruby</a> が依存しているライブラリなどをインストールします。
+インストールするライブラリは以下の通り (ちょっと多いですが、依存関係にあるライブラリが多いので、
+apt などのパッケージ管理ユーティリティを使えばすぐ終わります) 。</p>
+<ul>
+<li>Fontconfig</li>
+<li>libfreetype</li>
+<li>libpng</li>
+<li>libogg</li>
+<li>libvorbis</li>
+<li>libvorbisfile</li>
+<li>SDL</li>
+<li>SDL_mixer</li>
+<li>SDL_ttf</li>
+<li>SMPEG</li>
+<li>zlib</li>
+</ul>
+<p>詳しくは、 Star Ruby 付属の README の Dependent Libraries を参照してください。</p>
+
+<h3><a href="http://www.starruby.info/">Star Ruby</a> のインストール</h3>
+<p>Star Ruby 0.3.1 をインストールします。ソースからビルドする必要があります。
+README に従いビルド、インストールします。</p>
+<pre>$ ruby extconf.rb
+$ make
+$ sudo make install</pre>
+<p>詳しくは付属の README を参照してください。</p>
+
+<h3>可視化ライブラリのインストール</h3>
+<p>info.tar.gz を展開し、そのディレクトリの中で次のコマンドを実行します (ルート権限が必要です)。</p>
+<pre>$ tar zxvf info.tar.gz
+$ cd info
+$ ruby install.rb # もしくは sudo ruby install.rb</pre>
+
+<h3>実行</h3>
+<p>examples の中の Ruby ファイルを実行します。</p>
+<pre>$ ruby examples/array.rb # (例)</pre>
+<p>また、 irb も同様に実行できます。実行例は以下の通りです。</p>
+<pre>$ irb
+irb(main):001:0&gt; require "komaba/array" # おまじない
+irb(main):002:0&gt; show([0, 1])</pre>
+
+<h2 id="mac_os_x">インストール手順 (Mac OS X)</h2>
+
+<p>Linux と似ていますが、ちょっと複雑です。</p>
+<p>参考: <a href="http://www.starruby.info/ja/documentation/how_to_run_for_mac_os_x">http://www.starruby.info/ja/documentation/how_to_run_for_mac_os_x</a></p>
+
+<h3>XCodeTools のインストール</h3>
+
+<p>Mac 付属の CD-ROM から、 XCodeTools をインストールしてください。</p>
+
+<h3>MacPorts のインストール</h3>
+
+<p><a href="http://www.macports.org/">MacPorts</a> をインストールしてください。</p>
+
+<h3>各種ライブラリのインストール</h3>
+
+<p>先ほどインストールした MacPorts を利用して、各種ライブラリをインストールします。</p>
+
+<pre>$ sudo port install ruby
+$ sudo port install libsdl
+$ sudo port install libsdl_mixer
+$ sudo port install libsdl_ttf
+$ sudo port install libpng
+$ sudo port install fontconfig</pre>
+
+<h3>環境変数の設定</h3>
+
+<p>次のように環境変数の設定を行います。</p>
+<p>~/.bash_profile に (なかったら新規作成して) 以下のスクリプトを書きます。</p>
+
+<pre>export DYLD_LIBRARY_PATH=
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib
+export DYLD_SHARED_REGION=avoid</pre>
+
+<p>ターミナルを開き直すか、 source コマンドで .bash_profile の更新を反映させます。</p>
+
+<pre>$ source ~/.bash_profile</pre>
+
+
+<h3>RSDL、 <a href="http://starruby.info/">Star Ruby</a> のインストール</h3>
+
+<p>選択肢は二つあります。</p>
+<ul>
+<li>ソースコードからビルドする</li>
+<li>PrivatePortfile を利用する</li>
+</ul>
+
+<h4>ソースコードからビルドする</h4>
+
+<dl>
+<dt>RSDL のビルド</dt>
+<dd>
+<p><a href="http://www.kumaryu.net/?(Ruby)+Ruby%2FSDL%CD%D1ruby">RSDL</a> という Ruby の改造版をビルドしてください。 Star Ruby を使った Ruby スクリプトはすべて rsdl から起動する必要があります。</p>
+</dd>
+<dt>Star Ruby のビルド</dt>
+<dd>
+<p><a href="http://code.google.com/p/starruby/source">ソースコード</a>を取得して、インストールしてください
+(Subversion クライアントが必要です)。</p>
+<p>次に Star Ruby をビルドします。</p>
+<pre>$ ruby extconf.rb
+$ make
+$ sudo make install</pre>
+</dd>
+</dl>
+
+<h4>PrivatePortfile を利用する</h4>
+
+<p>RSDL および Star Ruby のポートファイルが用意されています。</p>
+<ul>
+<li>PrivatePorts/rb-starruby</li>
+</ul>
+
+<h3>可視化ライブラリのインストール</h3>
+<p>info.tar.gz を展開し、そのディレクトリの中で次のコマンドを実行します (ルート権限が必要です)。</p>
+<pre>$ tar zxvf info.tar.gz
+$ cd info
+$ ruby install.rb # もしくは sudo ruby install.rb</pre>
+
+<h3>実行</h3>
+<p>examples の中の Ruby ファイルを <em>rsdl コマンドで</em> 実行します。</p>
+<pre>$ rsdl examples/array.rb # (例)</pre>
+<p>また、 <em>isrb</em> (irb の代替) も同様に実行できます。実行例は以下の通りです。</p>
+<pre>$ isrb
+irb(main):001:0&gt; require "komaba/array" # おまじない
+irb(main):002:0&gt; show([0, 1])</pre>
+
+<h2>文責</h2>
+
+<address>情報理工学系研究科創造情報学専攻修士 2 年<br />
+48-076606 星一<br />
+&lt;hajimehoshi at gmail.com&gt;</address>
+
+</body>
+
+</html>

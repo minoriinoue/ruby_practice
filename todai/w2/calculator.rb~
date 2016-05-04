@@ -1,0 +1,13 @@
+def calculator(a, op, b)
+  if op == "+"
+    (a+b).to_s
+  elsif op == "-"
+    (a-b).to_s
+  elsif op == "*"
+    (a*b).to_s
+  elsif op == "/"
+    (a/b).to_s
+  else
+    "No matching operand. Only +, -, *, / are available."
+  end
+end
