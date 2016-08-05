@@ -1,0 +1,1 @@
+{"question":"駒場の理系","yes_branch":{"question":"学際科学科所属","yes_branch":{"question":"この授業は必修","yes_branch":{"answer":"総合情報学コース"},"no_branch":{"answer":"地球システムエネルギーコース"}},"no_branch":{"answer":"統合自然科学科"}},"no_branch":{"answer":"本郷生or文系"}}

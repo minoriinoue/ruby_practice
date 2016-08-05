@@ -14,7 +14,6 @@ def rec(n, memo, a)
         return memo[2]
     else
         memo[n] = [rec(n-1, memo,a) + (a[n-1] - a[n-2]).abs, rec(n-2, memo, a) + (a[n-1] - a[n-3]).abs].min
-        puts "memo[#{n}]: #{memo[n]}"
         return memo[n]
     end
 end
